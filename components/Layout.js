@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import Head from 'next/head';
-import NextLink from 'next/link';
+import React, { useContext } from "react";
+import Head from "next/head";
+import NextLink from "next/link";
 import {
   AppBar,
   Toolbar,
@@ -23,19 +23,20 @@ import {
   Divider,
   ListItemText,
   InputBase,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import CancelIcon from '@material-ui/icons/Cancel';
-import SearchIcon from '@material-ui/icons/Search';
-import useStyles from '../utils/styles';
-import { Store } from '../utils/Store';
-import { getError } from '../utils/error';
-import Cookies from 'js-cookie';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
-import axios from 'axios';
-import { useEffect } from 'react';
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import CancelIcon from "@material-ui/icons/Cancel";
+import SearchIcon from "@material-ui/icons/Search";
+import useStyles from "../utils/styles";
+import { Store } from "../utils/Store";
+import { getError } from "../utils/error";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import axios from "axios";
+import { useEffect } from "react";
+import { ShoppingCart } from "@material-ui/icons";
 
 export default function Layout({ title, description, children }) {
   const router = useRouter();
@@ -44,23 +45,23 @@ export default function Layout({ title, description, children }) {
   const theme = createMuiTheme({
     typography: {
       h1: {
-        fontSize: '1.6rem',
+        fontSize: "1.6rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
       h2: {
-        fontSize: '1.4rem',
+        fontSize: "1.4rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
     },
     palette: {
-      type: darkMode ? 'dark' : 'light',
+      type: darkMode ? "dark" : "light",
       primary: {
-        main: '#f0c000',
+        main: "#f0c000",
       },
       secondary: {
-        main: '#208080',
+        main: "#208080",
       },
     },
   });
@@ -82,11 +83,11 @@ export default function Layout({ title, description, children }) {
       const { data } = await axios.get(`/api/products/categories`);
       setCategories(data);
     } catch (err) {
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -100,9 +101,9 @@ export default function Layout({ title, description, children }) {
   }, []);
 
   const darkModeChangeHandler = () => {
-    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+    dispatch({ type: darkMode ? "DARK_MODE_OFF" : "DARK_MODE_ON" });
     const newDarkMode = !darkMode;
-    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+    Cookies.set("darkMode", newDarkMode ? "ON" : "OFF");
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const loginClickHandler = (e) => {
@@ -116,17 +117,17 @@ export default function Layout({ title, description, children }) {
   };
   const logoutClickHandler = () => {
     setAnchorEl(null);
-    dispatch({ type: 'USER_LOGOUT' });
-    Cookies.remove('userInfo');
-    Cookies.remove('cartItems');
-    Cookies.remove('shippinhAddress');
-    Cookies.remove('paymentMethod');
-    router.push('/');
+    dispatch({ type: "USER_LOGOUT" });
+    Cookies.remove("userInfo");
+    Cookies.remove("cartItems");
+    Cookies.remove("shippinhAddress");
+    Cookies.remove("paymentMethod");
+    router.push("/");
   };
   return (
     <div>
       <Head>
-        <title>{title ? `${title} - Next Amazona` : 'Next Amazona'}</title>
+        <title>{title ? `${title} - Next Amazona` : "sudamall"}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
@@ -144,7 +145,7 @@ export default function Layout({ title, description, children }) {
               </IconButton>
               <NextLink href="/" passHref>
                 <Link>
-                  <Typography className={classes.brand}>amazona</Typography>
+                  <Typography className={classes.brand}>سودامول</Typography>
                 </Link>
               </NextLink>
             </Box>
@@ -221,7 +222,9 @@ export default function Layout({ title, description, children }) {
                         Cart
                       </Badge>
                     ) : (
-                      'Cart'
+                      <ShoppingCart
+                        style={{ marginTop: "10px", fontSize: "2rem" }}
+                      />
                     )}
                   </Typography>
                 </Link>
@@ -244,13 +247,13 @@ export default function Layout({ title, description, children }) {
                     onClose={loginMenuCloseHandler}
                   >
                     <MenuItem
-                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                      onClick={(e) => loginMenuCloseHandler(e, "/profile")}
                     >
                       Profile
                     </MenuItem>
                     <MenuItem
                       onClick={(e) =>
-                        loginMenuCloseHandler(e, '/order-history')
+                        loginMenuCloseHandler(e, "/order-history")
                       }
                     >
                       Order Hisotry
@@ -258,7 +261,7 @@ export default function Layout({ title, description, children }) {
                     {userInfo.isAdmin && (
                       <MenuItem
                         onClick={(e) =>
-                          loginMenuCloseHandler(e, '/admin/dashboard')
+                          loginMenuCloseHandler(e, "/admin/dashboard")
                         }
                       >
                         Admin Dashboard
@@ -270,7 +273,7 @@ export default function Layout({ title, description, children }) {
               ) : (
                 <NextLink href="/login" passHref>
                   <Link>
-                    <Typography component="span">Login</Typography>
+                    <Typography component="span">Lon</Typography>
                   </Link>
                 </NextLink>
               )}
@@ -279,7 +282,7 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography>All rights reserved. Next Amazona.</Typography>
+          <Typography> جميع الحقوق محفوظة لسودامول</Typography>
         </footer>
       </ThemeProvider>
     </div>
