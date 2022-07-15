@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import NextLink from 'next/link';
-import Image from 'next/image';
+import React, { useContext, useEffect, useState } from "react";
+import NextLink from "next/link";
+import Image from "next/image";
 import {
   Grid,
   Link,
@@ -11,17 +11,17 @@ import {
   Button,
   TextField,
   CircularProgress,
-} from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
-import Layout from '../../components/Layout';
-import useStyles from '../../utils/styles';
-import Product from '../../models/Product';
-import db from '../../utils/db';
-import axios from 'axios';
-import { Store } from '../../utils/Store';
-import { getError } from '../../utils/error';
-import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
+} from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
+import Layout from "../../components/Layout";
+import useStyles from "../../utils/styles";
+import Product from "../../models/Product";
+import db from "../../utils/db";
+import axios from "axios";
+import { Store } from "../../utils/Store";
+import { getError } from "../../utils/error";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 
 export default function ProductScreen(props) {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function ProductScreen(props) {
 
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
@@ -51,11 +51,11 @@ export default function ProductScreen(props) {
         }
       );
       setLoading(false);
-      enqueueSnackbar('Review submitted successfully', { variant: 'success' });
+      enqueueSnackbar("تمت إضافة مراجعتك بنجاح", { variant: "success" });
       fetchReviews();
     } catch (err) {
       setLoading(false);
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
 
@@ -64,7 +64,7 @@ export default function ProductScreen(props) {
       const { data } = await axios.get(`/api/products/${product._id}/reviews`);
       setReviews(data);
     } catch (err) {
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
   useEffect(() => {
@@ -79,11 +79,11 @@ export default function ProductScreen(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("نأسف . المنتج غير متوفر حاليا");
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
 
   return (
@@ -91,7 +91,7 @@ export default function ProductScreen(props) {
       <div className={classes.section}>
         <NextLink href="/" passHref>
           <Link>
-            <Typography>back to products</Typography>
+            <Typography>رجوع الى المنتجات</Typography>
           </Link>
         </NextLink>
       </div>
@@ -113,10 +113,10 @@ export default function ProductScreen(props) {
               </Typography>
             </ListItem>
             <ListItem>
-              <Typography>Category: {product.category}</Typography>
+              <Typography>الاقسام: {product.category}</Typography>
             </ListItem>
             <ListItem>
-              <Typography>Brand: {product.brand}</Typography>
+              <Typography>الماركة: {product.brand}</Typography>
             </ListItem>
             <ListItem>
               <Rating value={product.rating} readOnly></Rating>
@@ -125,7 +125,7 @@ export default function ProductScreen(props) {
               </Link>
             </ListItem>
             <ListItem>
-              <Typography> Description: {product.description}</Typography>
+              <Typography> الوصف: {product.description}</Typography>
             </ListItem>
           </List>
         </Grid>
@@ -149,7 +149,7 @@ export default function ProductScreen(props) {
                   </Grid>
                   <Grid item xs={6}>
                     <Typography>
-                      {product.countInStock > 0 ? 'In stock' : 'Unavailable'}
+                      {product.countInStock > 0 ? "In stock" : "Unavailable"}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -161,7 +161,7 @@ export default function ProductScreen(props) {
                   color="primary"
                   onClick={addToCartHandler}
                 >
-                  Add to cart
+                  أضف الى العربة
                 </Button>
               </ListItem>
             </List>
@@ -171,7 +171,7 @@ export default function ProductScreen(props) {
       <List>
         <ListItem>
           <Typography name="reviews" id="reviews" variant="h2">
-            Customer Reviews
+            تقييمات الزبائن
           </Typography>
         </ListItem>
         {reviews.length === 0 && <ListItem>No review</ListItem>}
@@ -196,7 +196,7 @@ export default function ProductScreen(props) {
             <form onSubmit={submitHandler} className={classes.reviewForm}>
               <List>
                 <ListItem>
-                  <Typography variant="h2">Leave your review</Typography>
+                  <Typography variant="h2">اضف مراجعتك</Typography>
                 </ListItem>
                 <ListItem>
                   <TextField
@@ -223,7 +223,7 @@ export default function ProductScreen(props) {
                     variant="contained"
                     color="primary"
                   >
-                    Submit
+                    نشر التقييم
                   </Button>
 
                   {loading && <CircularProgress></CircularProgress>}
@@ -232,11 +232,11 @@ export default function ProductScreen(props) {
             </form>
           ) : (
             <Typography variant="h2">
-              Please{' '}
+              رجاء قم{" "}
               <Link href={`/login?redirect=/product/${product.slug}`}>
-                login
-              </Link>{' '}
-              to write a review
+                بتسجيل الدخول
+              </Link>{" "}
+              لكتابة مراجعتك
             </Typography>
           )}
         </ListItem>
@@ -250,7 +250,7 @@ export async function getServerSideProps(context) {
   const { slug } = params;
 
   await db.connect();
-  const product = await Product.findOne({ slug }, '-reviews').lean();
+  const product = await Product.findOne({ slug }, "-reviews").lean();
   await db.disconnect();
   return {
     props: {

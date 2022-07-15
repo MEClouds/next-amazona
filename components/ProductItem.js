@@ -6,18 +6,19 @@ import {
   CardContent,
   CardMedia,
   Typography,
-} from '@material-ui/core';
-import React from 'react';
-import NextLink from 'next/link';
-import Rating from '@material-ui/lab/Rating';
+} from "@material-ui/core";
+import React from "react";
+import NextLink from "next/link";
+import Rating from "@material-ui/lab/Rating";
 
 export default function ProductItem({ product, addToCartHandler }) {
   return (
-    <Card>
+    <Card style={{ margin: "auto" }}>
       <NextLink href={`/product/${product.slug}`} passHref>
         <CardActionArea>
           <CardMedia
             component="img"
+            height={120}
             image={product.image}
             title={product.name}
           ></CardMedia>

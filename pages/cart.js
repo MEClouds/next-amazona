@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import dynamic from 'next/dynamic';
-import Layout from '../components/Layout';
-import { Store } from '../utils/Store';
-import NextLink from 'next/link';
-import Image from 'next/image';
+import React, { useContext } from "react";
+import dynamic from "next/dynamic";
+import Layout from "../components/Layout";
+import { Store } from "../utils/Store";
+import NextLink from "next/link";
+import Image from "next/image";
 import {
   Grid,
   TableContainer,
@@ -20,9 +20,9 @@ import {
   Card,
   List,
   ListItem,
-} from '@material-ui/core';
-import axios from 'axios';
-import { useRouter } from 'next/router';
+} from "@material-ui/core";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function CartScreen() {
   const router = useRouter();
@@ -33,27 +33,27 @@ function CartScreen() {
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
   };
   const removeItemHandler = (item) => {
-    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    dispatch({ type: "CART_REMOVE_ITEM", payload: item });
   };
   const checkoutHandler = () => {
-    router.push('/shipping');
+    router.push("/shipping");
   };
   return (
     <Layout title="Shopping Cart">
       <Typography component="h1" variant="h1">
-        Shopping Cart
+        عربة التسوق
       </Typography>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty.{' '}
+          Cart is empty.{" "}
           <NextLink href="/" passHref>
-            <Link>Go shopping</Link>
+            <Link>الذهاب للتسوق</Link>
           </NextLink>
         </div>
       ) : (
@@ -63,10 +63,10 @@ function CartScreen() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Image</TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Quantity</TableCell>
-                    <TableCell align="right">Price</TableCell>
+                    <TableCell>الصورة</TableCell>
+                    <TableCell>الاسم</TableCell>
+                    <TableCell align="right">الكمية</TableCell>
+                    <TableCell align="right">السعر</TableCell>
                     <TableCell align="right">Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -111,7 +111,7 @@ function CartScreen() {
                       <TableCell align="right">
                         <Button
                           variant="contained"
-                          color="secondary"
+                          color="red"
                           onClick={() => removeItemHandler(item)}
                         >
                           x
@@ -128,8 +128,8 @@ function CartScreen() {
               <List>
                 <ListItem>
                   <Typography variant="h2">
-                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    items) : $
+                    المجموع ({cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                    منتج) : $
                     {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                   </Typography>
                 </ListItem>
@@ -140,7 +140,7 @@ function CartScreen() {
                     color="primary"
                     fullWidth
                   >
-                    Check Out
+                    اتمام علمية الدفع
                   </Button>
                 </ListItem>
               </List>

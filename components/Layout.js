@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Head from "next/head";
 import NextLink from "next/link";
+import { IoLogInOutline, IoPersonCircleOutline } from "react-icons/io5";
 import {
   AppBar,
   Toolbar,
@@ -55,13 +56,14 @@ export default function Layout({ title, description, children }) {
         margin: "1rem 0",
       },
     },
+
     palette: {
       type: darkMode ? "dark" : "light",
       primary: {
-        main: "#f0c000",
+        main: "#f0c121",
       },
       secondary: {
-        main: "#208080",
+        main: "#209090",
       },
     },
   });
@@ -127,7 +129,7 @@ export default function Layout({ title, description, children }) {
   return (
     <div>
       <Head>
-        <title>{title ? `${title} - Next Amazona` : "sudamall"}</title>
+        <title>{title ? `${title} - SudaZone` : "SudaZone"}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
@@ -144,13 +146,16 @@ export default function Layout({ title, description, children }) {
                 <MenuIcon className={classes.navbarButton} />
               </IconButton>
               <NextLink href="/" passHref>
-                <Link>
-                  <Typography className={classes.brand}>سودامول</Typography>
+                <Link style={{ textDecoration: "none" }}>
+                  <Typography className={classes.brand}>
+                    <span className={classes.blue}>Suda</span>
+                    <span className={classes.yellow}>Zone</span>
+                  </Typography>
                 </Link>
               </NextLink>
             </Box>
             <Drawer
-              anchor="left"
+              anchor="right"
               open={sidbarVisible}
               onClose={sidebarCloseHandler}
             >
@@ -182,7 +187,9 @@ export default function Layout({ title, description, children }) {
                       component="a"
                       onClick={sidebarCloseHandler}
                     >
-                      <ListItemText primary={category}></ListItemText>
+                      <Typography>
+                        <ListItemText primary={category}></ListItemText>
+                      </Typography>
                     </ListItem>
                   </NextLink>
                 ))}
@@ -194,39 +201,39 @@ export default function Layout({ title, description, children }) {
                 <InputBase
                   name="query"
                   className={classes.searchInput}
-                  placeholder="Search products"
+                  placeholder="ابحث عن منتج"
                   onChange={queryChangeHandler}
                 />
                 <IconButton
                   type="submit"
                   className={classes.iconButton}
-                  aria-label="search"
+                  aria-label="بحث"
                 >
                   <SearchIcon />
                 </IconButton>
               </form>
             </div>
             <div>
-              <Switch
-                checked={darkMode}
-                onChange={darkModeChangeHandler}
-              ></Switch>
+              <Typography component="span">
+                <Switch
+                  checked={darkMode}
+                  onChange={darkModeChangeHandler}
+                ></Switch>
+              </Typography>
               <NextLink href="/cart" passHref>
                 <Link>
-                  <Typography component="span">
-                    {cart.cartItems.length > 0 ? (
-                      <Badge
-                        color="secondary"
-                        badgeContent={cart.cartItems.length}
-                      >
-                        Cart
-                      </Badge>
-                    ) : (
-                      <ShoppingCart
-                        style={{ marginTop: "10px", fontSize: "2rem" }}
-                      />
-                    )}
-                  </Typography>
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
+                      <ShoppingCart style={{ fontSize: "2rem" }} />
+                    </Badge>
+                  ) : (
+                    <Badge>
+                      <ShoppingCart style={{ fontSize: "2rem" }} />
+                    </Badge>
+                  )}
                 </Link>
               </NextLink>
               {userInfo ? (
@@ -237,7 +244,8 @@ export default function Layout({ title, description, children }) {
                     onClick={loginClickHandler}
                     className={classes.navbarButton}
                   >
-                    {userInfo.name}
+                    {/* {userInfo.name} */}
+                    <IoPersonCircleOutline style={{ fontSize: "2rem" }} />
                   </Button>
                   <Menu
                     id="simple-menu"
@@ -256,7 +264,7 @@ export default function Layout({ title, description, children }) {
                         loginMenuCloseHandler(e, "/order-history")
                       }
                     >
-                      Order Hisotry
+                      تاريخ الطلبات
                     </MenuItem>
                     {userInfo.isAdmin && (
                       <MenuItem
@@ -264,7 +272,7 @@ export default function Layout({ title, description, children }) {
                           loginMenuCloseHandler(e, "/admin/dashboard")
                         }
                       >
-                        Admin Dashboard
+                        لوحة التحكم
                       </MenuItem>
                     )}
                     <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
@@ -273,7 +281,9 @@ export default function Layout({ title, description, children }) {
               ) : (
                 <NextLink href="/login" passHref>
                   <Link>
-                    <Typography component="span">Lon</Typography>
+                    <Badge>
+                      <IoLogInOutline style={{ fontSize: "2rem" }} />
+                    </Badge>
                   </Link>
                 </NextLink>
               )}
@@ -282,7 +292,14 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography> جميع الحقوق محفوظة لسودامول</Typography>
+          <Typography>
+            {" "}
+            جميع الحقوق محفوظة لــ{" "}
+            <span className={classes.brand}>
+              <span className={classes.blue}>Suda</span>
+              <span className={classes.yellow}>Zone</span>
+            </span>{" "}
+          </Typography>
         </footer>
       </ThemeProvider>
     </div>
