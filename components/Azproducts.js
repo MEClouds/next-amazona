@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardContent,
   CardMedia,
@@ -9,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import NextLink from "next/link";
-import Image from "next/image";
+
 const Azproducts = ({ product }) => {
   return (
     <Card style={{ margin: "5px 0" }}>

@@ -2,8 +2,6 @@ import {
   Box,
   Button,
   Grid,
-  List,
-  ListItem,
   MenuItem,
   Select,
   Typography,
